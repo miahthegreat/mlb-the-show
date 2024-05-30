@@ -1,4 +1,10 @@
 {
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json", // Specify the path to your tsconfig.json file
+    "ecmaVersion": 2020,
+    "sourceType": "module"
+  },
   "extends": [
     "next/core-web-vitals",
     "eslint:recommended",
@@ -8,13 +14,9 @@
   "rules": {
     // Other rules
     "@next/next/no-img-element": "off",
-    "@typescript-eslint/ban-ts-comment": "error"
+    "@typescript-eslint/ban-ts-comment": "error",
+    "@typescript-eslint/await-thenable": "error"
   },
 
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "ecmaVersion": 2020,
-    "sourceType": "module"
-  },
   "plugins": ["@typescript-eslint"]
 }
