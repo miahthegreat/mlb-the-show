@@ -22,6 +22,7 @@ import {
 import Link from "next/link";
 import { cx } from "class-variance-authority";
 import { getRarityClass } from "@/utils/getRarityClass";
+import Image from "next/image";
 
 const ItemsPage = () => {
   const {
@@ -191,33 +192,19 @@ const ItemsPage = () => {
               >
                 <Link
                   href={`/items/${item.uuid}`}
-                  className="grid gap-2 justify-between items-center"
+                  className="grid justify-center gap-2 items-center"
                 >
-                  <img
+                  <Image
+                    alt={`${item.name} image`}
                     src={item.baked_img}
-                    className="rounded-lg scale-90 hover:scale-100 group-hover:shadow-lg transform transition-transform duration-300 ease-in"
+                    className="rounded-lg shadow scale-90 hover:scale-100 group-hover:shadow-lg transform transition-transform duration-300 ease-in"
+                    height={200}
+                    width={200}
                   />
-                  <div className="flex gap-2 items-center">
-                    <img
-                      src={`/assets/images/${item.rarity.toLowerCase()}.png`}
-                      alt={item.rarity}
-                      className="h-12"
-                    />
-                    <h2 className="text-lg font-semibold">
-                      {item.series} series
-                    </h2>
-                  </div>
-                  {/* <div className="flex justify-end items-center">
-                    <img
-                      className={cx(
-                        "h-12 aspect-square ring-1 p-1 ring-gray-900 justify-center rounded-full object-cover"
-                      )}
-                      src={`/assets/images/${item.team
-                        .replace(/\s/g, "")
-                        .toLowerCase()}.png`}
-                      alt={item.team}
-                    />
-                  </div> */}
+
+                  <h2 className="text-lg font-semibold text-center">
+                    {item.series} series
+                  </h2>
                 </Link>
               </motion.li>
             );

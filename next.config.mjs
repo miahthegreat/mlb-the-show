@@ -9,7 +9,7 @@ const nextConfig = {
     ];
   },
   images: {
-    domains: ["mlb24.theshow.com", "cards.theshow.com"],
+    domains: ["mlb24.theshow.com", "cards.theshow.com", "tailwindui.com"],
   },
 };
 

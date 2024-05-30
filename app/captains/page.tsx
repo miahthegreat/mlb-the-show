@@ -103,8 +103,11 @@ const Home = () => {
               passHref
             >
               <motion.li className="bg-white mx-auto rounded-lg shadow p-4 ring ring-gray-200/20 group transform transition-transform duration-200 ease-in group hover:cursor-pointer">
-                <img
+                <Image
+                  alt={`${captain.name} image`}
                   src={captain.baked_img}
+                  width={250}
+                  height={250}
                   className="rounded shadow-lg scale-90 group-hover:scale-[1] transform transition-transform duration-200 ease-in group-hover:cursor-pointer"
                 />
                 {/* <div className="flex justify-between items-center">

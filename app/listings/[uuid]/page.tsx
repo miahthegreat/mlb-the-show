@@ -75,21 +75,21 @@ const SingleListingPage = () => {
       {
         label: "Best Sell Price",
         data: listing.price_history.map((entry: any) => entry.best_sell_price),
-        borderColor: "rgba(75, 192, 192, 1)",
-        backgroundColor: "rgba(75, 192, 192, 0.2)",
+        borderColor: "rgba(15, 27, 191, 1)",
+        backgroundColor: "rgba(15, 27, 191, 0.2)",
         tension: 0.4,
         fill: false,
-        pointBackgroundColor: "rgba(75, 192, 192, 1)",
+        pointBackgroundColor: "rgba(15, 27, 191, 1)",
         pointRadius: 5,
       },
       {
         label: "Best Buy Price",
         data: listing.price_history.map((entry: any) => entry.best_buy_price),
-        borderColor: "rgba(255, 99, 132, 1)",
-        backgroundColor: "rgba(255, 99, 132, 0.2)",
+        borderColor: "rgba(240, 111, 12, 1)",
+        backgroundColor: "rgba(240, 111, 12, 0.2)",
         tension: 0.4,
         fill: false,
-        pointBackgroundColor: "rgba(255, 99, 132, 1)",
+        pointBackgroundColor: "rgba(240, 111, 12, 1)",
         pointRadius: 5,
       },
     ],
@@ -127,7 +127,7 @@ const SingleListingPage = () => {
     const minBuyPrice = Math.min(...buyPrices);
 
     return (
-      <div className="border max-w-max">
+      <div className="max-w-max">
         <h3 className="text-2xl font-bold mt-4 text-center">Price History</h3>
         <p className="italic text-sm text-gray-500 text-center">
           Over the Last {dayDiff} Days
@@ -277,8 +277,8 @@ const SingleListingPage = () => {
       {
         label: "Completed Orders",
         data: processCompletedOrdersData(),
-        backgroundColor: "rgba(75, 192, 192, 1)",
-        borderColor: "rgba(75, 192, 192, 0.8)",
+        backgroundColor: "rgba(15, 27, 191, 1)",
+        borderColor: "rgba(15, 27, 191, 0.8)",
         pointRadius: 5,
       },
     ],
@@ -290,52 +290,55 @@ const SingleListingPage = () => {
         {listing.listing_name}
       </h1>
       <div className="bg-white rounded-lg shadow p-4">
-        <div className="flex gap-6 items-center">
+        <div className="flex gap-6 justify-between items-center">
           <div className="flex gap-2 items-center">
-            <div className="relative">
-              <Image
-                src={listing.item.baked_img}
-                alt={listing.item.name}
-                width={150}
-                height={150}
-                className="rounded-lg relative"
-              />
-              <Image
-                src="/assets/images/diamond-bg.jpg"
-                alt="diamond background"
-                width={100}
-                height={100}
-                className="top-0 left-0 absolute -z-10"
-              />
-            </div>
-            <div className="ml-4">
-              <h2 className="text-xl font-bold">{listing.item.name}</h2>
-              <p className="text-gray-600">{listing.item.team}</p>
-              <p className="text-gray-600">Rarity: {listing.item.rarity}</p>
-              <p className="text-gray-600">Overall: {listing.item.ovr}</p>
-              <p className="text-gray-600">
-                Series: {listing.item.series} ({listing.item.series_year})
-              </p>
-              <p className="text-gray-600">
-                Position: {listing.item.display_position}
-              </p>
-              <p className="text-gray-600 flex gap-2 items-center">
-                <span>Best Sell Price: </span>
-                <span>
-                  <img src="/assets/images/stubs.webp" className="h-5 w-auto" />
-                </span>
-                <span>{formatNumber(listing.best_sell_price)}</span>
-              </p>
-              <p className="text-gray-600 flex gap-2 items-center">
-                <span>Best Buy Price: </span>
-                <span>
-                  <img src="/assets/images/stubs.webp" className="h-5 w-auto" />
-                </span>
-                <span>{formatNumber(listing.best_buy_price)}</span>
-              </p>
-            </div>
+            <Image
+              src={listing.item.baked_img}
+              alt={listing.item.name}
+              width={200}
+              height={200}
+              className="rounded-lg relative"
+            />
           </div>
           {Commentary(listing.price_history)}
+          <div className="text-right">
+            <h2 className="text-xl font-bold">{listing.item.name}</h2>
+            <p className="text-gray-600">{listing.item.team}</p>
+            <p className="text-gray-600">Rarity: {listing.item.rarity}</p>
+            <p className="text-gray-600">Overall: {listing.item.ovr}</p>
+            <p className="text-gray-600">
+              Series: {listing.item.series} ({listing.item.series_year})
+            </p>
+            <p className="text-gray-600">
+              Position: {listing.item.display_position}
+            </p>
+            <p className="text-gray-600 flex justify-end gap-2 items-center">
+              <span>Sell Price: </span>
+              <span>{formatNumber(listing.best_sell_price)}</span>
+              <span>
+                <Image
+                  src="/assets/images/stubs.webp"
+                  className="h-5 w-auto "
+                  alt="stubs logo"
+                  width={20}
+                  height={20}
+                />
+              </span>
+            </p>
+            <p className="text-gray-600 flex justify-end gap-2 items-center">
+              <span>Buy Price: </span>
+              <span>{formatNumber(listing.best_buy_price)}</span>
+              <span>
+                <Image
+                  src="/assets/images/stubs.webp"
+                  className="h-5 w-auto"
+                  alt="stubs logo"
+                  width={20}
+                  height={20}
+                />
+              </span>
+            </p>
+          </div>
         </div>
         {listing.price_history.length > 0 && (
           <>
