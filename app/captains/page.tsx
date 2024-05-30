@@ -95,22 +95,23 @@ const Home = () => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
-          {captains.map((captain) => (
-            <Link
-              key={captain.uuid}
-              href={`/items/${captain.uuid}`}
-              legacyBehavior
-              passHref
-            >
-              <motion.li className="bg-white mx-auto rounded-lg shadow p-4 ring ring-gray-200/20 group transform transition-transform duration-200 ease-in group hover:cursor-pointer">
-                <Image
-                  alt={`${captain.name} image`}
-                  src={captain.baked_img}
-                  width={250}
-                  height={250}
-                  className="rounded shadow-lg scale-90 group-hover:scale-[1] transform transition-transform duration-200 ease-in group-hover:cursor-pointer"
-                />
-                {/* <div className="flex justify-between items-center">
+          {captains &&
+            captains.map((captain) => (
+              <Link
+                key={captain.uuid}
+                href={`/items/${captain.uuid}`}
+                legacyBehavior
+                passHref
+              >
+                <motion.li className="bg-white mx-auto rounded-lg shadow p-4 ring ring-gray-200/20 group transform transition-transform duration-200 ease-in group hover:cursor-pointer">
+                  <Image
+                    alt={`${captain.name} image`}
+                    src={captain.baked_img}
+                    width={250}
+                    height={250}
+                    className="rounded shadow-lg scale-90 group-hover:scale-[1] transform transition-transform duration-200 ease-in group-hover:cursor-pointer"
+                  />
+                  {/* <div className="flex justify-between items-center">
                   <h2 className="text-base font-semibold">{captain.name}</h2>
                   <div className="bg-white rounded-full border-black border p-1">
                     <Image
@@ -136,9 +137,9 @@ const Home = () => {
                     </p>
                   ) : null}
                 </div> */}
-              </motion.li>
-            </Link>
-          ))}
+                </motion.li>
+              </Link>
+            ))}
         </motion.ul>
       )}
     </div>
