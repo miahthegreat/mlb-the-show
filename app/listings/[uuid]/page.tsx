@@ -94,8 +94,7 @@ const SingleListingPage = () => {
       },
     ],
   };
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
+  // @ts-ignore: ignoring this line
   const Commentary = (priceHistory) => {
     if (priceHistory.length < 2) {
       return <p>Not enough data to provide commentary.</p>;
