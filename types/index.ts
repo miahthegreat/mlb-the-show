@@ -168,7 +168,7 @@ export type ApiResponse = {
 };
 
 export interface StateContextType {
-  captains: Captain[];
+  captains: Captain[] | undefined;
   items: Item[];
   listings: Listing[];
   captainsPage: number;
