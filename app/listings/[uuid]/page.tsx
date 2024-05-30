@@ -94,6 +94,7 @@ const SingleListingPage = () => {
       },
     ],
   };
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore: ignoring this line
   const Commentary = (priceHistory) => {
     if (priceHistory.length < 2) {
