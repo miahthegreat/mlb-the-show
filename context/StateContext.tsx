@@ -70,7 +70,7 @@ export const StateProvider: React.FC<{ children: ReactNode }> = ({
   ) => {
     try {
       const data = await getListings(page, type, sort, order, rarity);
-      setListings(data.listings);
+      setListings(data.listings || []);
       setListingsTotalPages(data.total_pages);
       setError(null);
     } catch (err) {

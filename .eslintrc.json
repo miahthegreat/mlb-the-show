@@ -5,6 +5,7 @@
     "ecmaVersion": 2020,
     "sourceType": "module"
   },
+  "ignorePatterns": ["app/not-found.js"],
   "extends": [
     "next/core-web-vitals",
     "eslint:recommended",

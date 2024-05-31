@@ -57,6 +57,76 @@ const ListingsPage = () => {
     setPage("listings", newPage);
   };
 
+  const renderPaginationItems = () => {
+    if (listingsTotalPages <= 5) {
+      return Array.from({ length: listingsTotalPages }, (_, index) => {
+        const pageNumber = index + 1;
+        return (
+          <PaginationItem key={pageNumber}>
+            <PaginationLink
+              isActive={pageNumber === listingsPage}
+              onClick={() => handlePageChange(pageNumber)}
+            >
+              {pageNumber}
+            </PaginationLink>
+          </PaginationItem>
+        );
+      });
+    } else {
+      return (
+        <>
+          {listingsPage > 1 && (
+            <PaginationItem>
+              <PaginationLink onClick={() => handlePageChange(1)}>
+                1
+              </PaginationLink>
+            </PaginationItem>
+          )}
+          {listingsPage > 3 && (
+            <PaginationItem>
+              <PaginationEllipsis />
+            </PaginationItem>
+          )}
+          {listingsPage > 2 && (
+            <PaginationItem>
+              <PaginationLink
+                onClick={() => handlePageChange(listingsPage - 1)}
+              >
+                {listingsPage - 1}
+              </PaginationLink>
+            </PaginationItem>
+          )}
+          <PaginationItem>
+            <PaginationLink isActive>{listingsPage}</PaginationLink>
+          </PaginationItem>
+          {listingsPage < listingsTotalPages - 1 && (
+            <PaginationItem>
+              <PaginationLink
+                onClick={() => handlePageChange(listingsPage + 1)}
+              >
+                {listingsPage + 1}
+              </PaginationLink>
+            </PaginationItem>
+          )}
+          {listingsPage < listingsTotalPages - 2 && (
+            <PaginationItem>
+              <PaginationEllipsis />
+            </PaginationItem>
+          )}
+          {listingsPage < listingsTotalPages && (
+            <PaginationItem>
+              <PaginationLink
+                onClick={() => handlePageChange(listingsTotalPages)}
+              >
+                {listingsTotalPages}
+              </PaginationLink>
+            </PaginationItem>
+          )}
+        </>
+      );
+    }
+  };
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-4 text-center">Listings</h1>
@@ -111,73 +181,7 @@ const ListingsPage = () => {
             onClick={() => handlePageChange(listingsPage - 1)}
             disabled={listingsPage === 1}
           />
-          <PaginationContent>
-            {listingsTotalPages <= 5 ? (
-              [...Array(listingsTotalPages)].map((_, index) => {
-                const pageNumber = index + 1;
-                return (
-                  <PaginationItem key={pageNumber}>
-                    <PaginationLink
-                      isActive={pageNumber === listingsPage}
-                      onClick={() => handlePageChange(pageNumber)}
-                    >
-                      {pageNumber}
-                    </PaginationLink>
-                  </PaginationItem>
-                );
-              })
-            ) : (
-              <>
-                {listingsPage > 1 && (
-                  <PaginationItem>
-                    <PaginationLink onClick={() => handlePageChange(1)}>
-                      1
-                    </PaginationLink>
-                  </PaginationItem>
-                )}
-                {listingsPage > 3 && (
-                  <PaginationItem>
-                    <PaginationEllipsis />
-                  </PaginationItem>
-                )}
-                {listingsPage > 2 && (
-                  <PaginationItem>
-                    <PaginationLink
-                      onClick={() => handlePageChange(listingsPage - 1)}
-                    >
-                      {listingsPage - 1}
-                    </PaginationLink>
-                  </PaginationItem>
-                )}
-                <PaginationItem>
-                  <PaginationLink isActive>{listingsPage}</PaginationLink>
-                </PaginationItem>
-                {listingsPage < listingsTotalPages - 1 && (
-                  <PaginationItem>
-                    <PaginationLink
-                      onClick={() => handlePageChange(listingsPage + 1)}
-                    >
-                      {listingsPage + 1}
-                    </PaginationLink>
-                  </PaginationItem>
-                )}
-                {listingsPage < listingsTotalPages - 2 && (
-                  <PaginationItem>
-                    <PaginationEllipsis />
-                  </PaginationItem>
-                )}
-                {listingsPage < listingsTotalPages && (
-                  <PaginationItem>
-                    <PaginationLink
-                      onClick={() => handlePageChange(listingsTotalPages)}
-                    >
-                      {listingsTotalPages}
-                    </PaginationLink>
-                  </PaginationItem>
-                )}
-              </>
-            )}
-          </PaginationContent>
+          <PaginationContent>{renderPaginationItems()}</PaginationContent>
           <PaginationNext
             onClick={() => handlePageChange(listingsPage + 1)}
             disabled={listingsPage === listingsTotalPages}
@@ -216,6 +220,7 @@ const ListingsPage = () => {
                     <img
                       src="/assets/images/stubs.webp"
                       className="h-5 w-auto"
+                      alt="stubs logo"
                     />
                   </span>
                   <span>{formatNumber(listing.best_sell_price)}</span>
@@ -226,6 +231,7 @@ const ListingsPage = () => {
                     <img
                       src="/assets/images/stubs.webp"
                       className="h-5 w-auto"
+                      alt="stubs logo"
                     />
                   </span>
                   <span>{formatNumber(listing.best_buy_price)}</span>

@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { getListingByUUID } from "@/lib/api";
 import Image from "next/image";
 import { formatNumber } from "@/utils/formatNumber";
-import { Listing } from "@/types";
+import { Listing, PriceHistoryEntry } from "@/types";
 import { useParams } from "next/navigation";
 import { Line, Scatter } from "react-chartjs-2";
 import {
@@ -42,7 +42,7 @@ const SingleListingPage = () => {
 
   useEffect(() => {
     if (uuid) {
-      fetchListing(uuid as string);
+      void fetchListing(uuid as string);
     }
   }, [uuid]);
 
@@ -66,11 +66,13 @@ const SingleListingPage = () => {
   }
 
   const priceHistoryData = {
-    labels: listing.price_history.map((entry: any) => entry.date),
+    labels: listing.price_history.map((entry) => entry.date),
     datasets: [
       {
         label: "Best Sell Price",
-        data: listing.price_history.map((entry: any) => entry.best_sell_price),
+        data: listing.price_history.map(
+          (entry: PriceHistoryEntry) => entry.best_sell_price
+        ),
         borderColor: "rgba(15, 27, 191, 1)",
         backgroundColor: "rgba(15, 27, 191, 0.2)",
         tension: 0.4,
@@ -80,7 +82,9 @@ const SingleListingPage = () => {
       },
       {
         label: "Best Buy Price",
-        data: listing.price_history.map((entry: any) => entry.best_buy_price),
+        data: listing.price_history.map(
+          (entry: PriceHistoryEntry) => entry.best_buy_price
+        ),
         borderColor: "rgba(240, 111, 12, 1)",
         backgroundColor: "rgba(240, 111, 12, 0.2)",
         tension: 0.4,
@@ -92,24 +96,20 @@ const SingleListingPage = () => {
   };
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
   // @ts-ignore: ignoring this line
-  const Commentary = (priceHistory) => {
+  const Commentary = (priceHistory: PriceHistoryEntry[]) => {
     if (priceHistory.length < 2) {
       return <p>Not enough data to provide commentary.</p>;
     }
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore: ignoring this line
-    const sellPrices = priceHistory.map((entry) => entry.best_sell_price);
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore: ignoring this line
-    const buyPrices = priceHistory.map((entry) => entry.best_buy_price);
+    const sellPrices = priceHistory.map(
+      (entry: PriceHistoryEntry) => entry.best_sell_price
+    );
+    const buyPrices = priceHistory.map(
+      (entry: PriceHistoryEntry) => entry.best_buy_price
+    );
     const averageSellPrice =
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore: ignoring this line
       sellPrices.reduce((acc, price) => acc + price, 0) / sellPrices.length;
 
     const averageBuyPrice =
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore: ignoring this line
       buyPrices.reduce((acc, price) => acc + price, 0) / buyPrices.length;
 
     const recentSellPriceChange =
@@ -247,14 +247,14 @@ const SingleListingPage = () => {
       x: {
         ticks: {
           callback: function (
-            value: any,
+            value: number | string,
             index: number,
-            values: any[]
+            values: Array<{ value: number | string }>
           ): string | null {
             const totalTicks = values.length;
             const showEveryNthLabel = Math.ceil(totalTicks / 10); // Adjust 10 to change number of labels shown
             if (index % showEveryNthLabel === 0) {
-              return this.getLabelForValue(value);
+              return this.getLabelForValue(Number(value));
             }
             return null;
           },

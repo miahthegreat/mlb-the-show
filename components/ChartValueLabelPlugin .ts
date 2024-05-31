@@ -11,7 +11,6 @@ export const ChartValueLabelPlugin: Plugin<'bar'> = {
           const data = dataset.data[index] as number;
           ctx.fillStyle = 'black';
           const fontSize = 12;
-          const fontStyle = 'normal';
           const fontFamily = 'Calibri';
           ctx.font = `${fontSize}px ${fontFamily}`;
           ctx.textAlign = 'center';

@@ -21,24 +21,24 @@ const ItemDetailPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchItem = async () => {
-      try {
-        if (typeof uuid === "string") {
-          const itemData = await getItemByUUID(uuid);
-          setItem(itemData);
-          setError(null);
-        }
-      } catch (err) {
-        console.error("Error fetching item detail:", err);
-        setError("Failed to load item details");
-      } finally {
-        setIsLoading(false);
+  const fetchItem = async () => {
+    try {
+      if (typeof uuid === "string") {
+        const itemData = await getItemByUUID(uuid);
+        setItem(itemData);
+        setError(null);
       }
-    };
+    } catch (err) {
+      console.error("Error fetching item detail:", err);
+      setError("Failed to load item details");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
-    fetchItem();
-  }, [uuid]);
+  useEffect(() => {
+    void fetchItem();
+  });
 
   if (isLoading) {
     return (
