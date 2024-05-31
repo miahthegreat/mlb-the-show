@@ -111,32 +111,6 @@ const Home = () => {
                     height={250}
                     className="rounded shadow-lg scale-90 group-hover:scale-[1] transform transition-transform duration-200 ease-in group-hover:cursor-pointer"
                   />
-                  {/* <div className="flex justify-between items-center">
-                  <h2 className="text-base font-semibold">{captain.name}</h2>
-                  <div className="bg-white rounded-full border-black border p-1">
-                    <Image
-                      src={`/assets/images/${captain.team
-                        .replace(/\s/g, "")
-                        .toLowerCase()}.png`}
-                      alt={`${captain.team} logo`}
-                      width="50"
-                      height="50"
-                      className="rounded-full"
-                    />
-                  </div>
-                </div>
-                <p className="text-gray-600 text-sm">
-                  {captain.display_position} -{" "}
-                  <span className="font-bold">OVR:</span> {captain.ovr}
-                </p>
-                <div className="text-gray-600 mt-2">
-                  <p className="font-bold text-sm">{captain.ability_name}</p>
-                  {captain.ability_name !== captain.ability_desc ? (
-                    <p className="text-xs italic">
-                      {cleanString(captain.ability_desc)}
-                    </p>
-                  ) : null}
-                </div> */}
                 </motion.li>
               </Link>
             ))}
