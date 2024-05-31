@@ -99,7 +99,6 @@ const ItemsPage = () => {
             isActive={i === itemsPage}
             onClick={() => handlePageChange(i)}
             disabled={isLoading}
-            className="hover:cursor-pointer"
           >
             {i}
           </PaginationLink>
@@ -116,7 +115,6 @@ const ItemsPage = () => {
           <PaginationLink
             onClick={() => handlePageChange(itemsTotalPages)}
             disabled={isLoading}
-            className="hover:cursor-pointer"
           >
             {itemsTotalPages}
           </PaginationLink>

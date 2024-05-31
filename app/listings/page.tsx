@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/pagination";
 import { formatNumber } from "@/utils/formatNumber";
 import Link from "next/link";
+import { useState } from "react";
 
 const ListingsPage = () => {
   const {
@@ -36,6 +37,7 @@ const ListingsPage = () => {
     setOrder,
     setRarity,
   } = useStateContext();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleTypeChange = (value: string) => {
     setListingType(value);
@@ -180,11 +182,21 @@ const ListingsPage = () => {
           <PaginationPrevious
             onClick={() => handlePageChange(listingsPage - 1)}
             disabled={listingsPage === 1}
+            className={
+              listingsPage === 1 || isLoading
+                ? "hover:cursor-not-allowed"
+                : "hover:cursor-pointer"
+            }
           />
           <PaginationContent>{renderPaginationItems()}</PaginationContent>
           <PaginationNext
             onClick={() => handlePageChange(listingsPage + 1)}
             disabled={listingsPage === listingsTotalPages}
+            className={
+              listingsPage === listingsTotalPages || isLoading
+                ? "hover:cursor-not-allowed"
+                : "hover:cursor-pointer"
+            }
           />
         </Pagination>
       </div>
