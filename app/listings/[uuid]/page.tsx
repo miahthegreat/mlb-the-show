@@ -22,11 +22,7 @@ import {
   ChartOptions,
 } from "chart.js";
 import "chartjs-adapter-date-fns";
-import {
-  ArrowUpFromLineIcon,
-  ArrowDownFromLineIcon,
-  Triangle,
-} from "lucide-react";
+import { ArrowUpFromLineIcon, ArrowDownFromLineIcon } from "lucide-react";
 
 ChartJS.register(
   CategoryScale,

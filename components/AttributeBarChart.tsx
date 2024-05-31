@@ -8,7 +8,6 @@ import {
   Title,
   Tooltip,
   Legend,
-  Plugin,
 } from "chart.js";
 import { ChartValueLabelPlugin } from "./ChartValueLabelPlugin ";
 import { getNextMultipleOfTwenty } from "@/utils/getNextMultipleOfTwenty";

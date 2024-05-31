@@ -2,7 +2,6 @@
 
 "use client";
 
-import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { useStateContext } from "@/context/StateContext";
 import Image from "next/image";

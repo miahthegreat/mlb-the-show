@@ -1,4 +1,4 @@
-import { Chart, Plugin } from 'chart.js';
+import { Plugin } from 'chart.js';
 
 export const ChartValueLabelPlugin: Plugin<'bar'> = {
   id: 'valueLabel',

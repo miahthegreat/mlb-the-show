@@ -21,7 +21,6 @@ import {
 } from "@/components/ui/select"; // Adjust the import path as needed
 import Link from "next/link";
 import { cx } from "class-variance-authority";
-import { getRarityClass } from "@/utils/getRarityClass";
 import Image from "next/image";
 
 const ItemsPage = () => {

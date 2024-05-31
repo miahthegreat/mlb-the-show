@@ -4,7 +4,6 @@ import { getItemByUUID } from "@/lib/api";
 import { ItemDetail } from "@/types";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
 import Image from "next/image";
 import AttributeBarChart from "@/components/AttributeBarChart";
 import {

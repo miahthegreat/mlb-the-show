@@ -2,7 +2,6 @@
 
 import { useStateContext } from "@/context/StateContext";
 import Image from "next/image";
-import { cleanString } from "@/utils/cleanString";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import {
