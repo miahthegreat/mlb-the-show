@@ -40,7 +40,7 @@ export const StateProvider: React.FC<{ children: ReactNode }> = ({
   const fetchCaptains = async (page: number) => {
     try {
       const data = await getCaptains(page);
-      setCaptains(data.captains);
+      setCaptains(data.captains || []);
       setCaptainsTotalPages(data.total_pages);
       setError(null);
     } catch (err) {
@@ -52,7 +52,7 @@ export const StateProvider: React.FC<{ children: ReactNode }> = ({
   const fetchItems = async (page: number, type: string) => {
     try {
       const data = await getItems(page, type);
-      setItems(data.items);
+      setItems(data.items || []);
       setItemsTotalPages(data.total_pages);
       setError(null);
     } catch (err) {
