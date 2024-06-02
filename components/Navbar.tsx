@@ -23,9 +23,10 @@ import { cx } from "class-variance-authority";
 
 export default function Navbar() {
   const pathname = usePathname();
+
   return (
     <>
-      <NavigationMenu className="hidden md:fixed p-4 md:bg-white/40 md:backdrop-blur-sm">
+      <NavigationMenu className="hidden md:fixed p-4 md:bg-slate-50/90 md:backdrop-blur-sm shadow-md">
         <NavigationMenuList>
           <NavigationMenuItem>
             <Link href="/" legacyBehavior passHref>
@@ -72,7 +73,7 @@ export default function Navbar() {
                   `${pathname === "/listings" ? "bg-gray-100" : ""}`
                 )}
               >
-                Marketplace
+                Listings
               </NavigationMenuLink>
             </Link>
           </NavigationMenuItem>
@@ -102,7 +103,7 @@ export default function Navbar() {
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
-      <div className="block md:hidden">
+      <div className="fixed w-full p-2 z-[5] bg-slate-50/90 backdrop-blur-sm shadow-md md:m-0 md:hidden">
         <MobileNav pathname={pathname} />
       </div>
     </>
@@ -136,20 +137,22 @@ const ListItem = React.forwardRef<
 ListItem.displayName = "ListItem";
 
 const MobileNav = ({ pathname }: { pathname: string }) => {
+  const [menuOpen, setMenuOpen] = React.useState(false);
   return (
-    <Popover>
+    <Popover open={menuOpen} onOpenChange={setMenuOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline">
+        <Button variant="ghost">
           <MenuIcon />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-80 grid grid-cols-2 gap-1">
         <Link
           href="/"
+          onClick={() => setMenuOpen(false)}
           className={cx(
             navigationMenuTriggerStyle(),
             `${pathname === "/" ? "bg-gray-100" : ""}`,
-            "min-w-full text-center bg-gray-50"
+            "min-w-full text-center"
           )}
         >
           Home
@@ -157,10 +160,11 @@ const MobileNav = ({ pathname }: { pathname: string }) => {
 
         <Link
           href="/captains"
+          onClick={() => setMenuOpen(false)}
           className={cx(
             navigationMenuTriggerStyle(),
             `${pathname === "/captains" ? "bg-gray-100" : ""}`,
-            "min-w-full text-center bg-gray-50"
+            "min-w-full text-center"
           )}
         >
           Captains
@@ -168,10 +172,11 @@ const MobileNav = ({ pathname }: { pathname: string }) => {
 
         <Link
           href="/items"
+          onClick={() => setMenuOpen(false)}
           className={cx(
             navigationMenuTriggerStyle(),
             `${pathname === "/items" ? "bg-gray-100" : ""}`,
-            "min-w-full text-center bg-gray-50"
+            "min-w-full text-center"
           )}
         >
           Items
@@ -179,10 +184,11 @@ const MobileNav = ({ pathname }: { pathname: string }) => {
 
         <Link
           href="/listings"
+          onClick={() => setMenuOpen(false)}
           className={cx(
             navigationMenuTriggerStyle(),
             `${pathname === "/listings" ? "bg-gray-100" : ""}`,
-            "min-w-full text-center bg-gray-50"
+            "min-w-full text-center"
           )}
         >
           Listings
@@ -190,10 +196,11 @@ const MobileNav = ({ pathname }: { pathname: string }) => {
 
         <Link
           href="/updates"
+          onClick={() => setMenuOpen(false)}
           className={cx(
             navigationMenuTriggerStyle(),
             `${pathname === "/updates" ? "bg-gray-100" : ""}`,
-            "min-w-full text-center bg-gray-50"
+            "min-w-full text-center"
           )}
         >
           Roster Updates
@@ -201,10 +208,11 @@ const MobileNav = ({ pathname }: { pathname: string }) => {
 
         <Link
           href="/history"
+          onClick={() => setMenuOpen(false)}
           className={cx(
             navigationMenuTriggerStyle(),
             `${pathname === "/history" ? "bg-gray-100" : ""}`,
-            "min-w-full text-center bg-gray-50"
+            "min-w-full text-center"
           )}
         >
           Game History

@@ -68,6 +68,7 @@ const ListingsPage = () => {
             <PaginationLink
               isActive={pageNumber === listingsPage}
               onClick={() => handlePageChange(pageNumber)}
+              className="hover:cursor-pointer"
             >
               {pageNumber}
             </PaginationLink>
@@ -79,7 +80,10 @@ const ListingsPage = () => {
         <>
           {listingsPage > 1 && (
             <PaginationItem>
-              <PaginationLink onClick={() => handlePageChange(1)}>
+              <PaginationLink
+                onClick={() => handlePageChange(1)}
+                className="hover:cursor-pointer"
+              >
                 1
               </PaginationLink>
             </PaginationItem>
@@ -93,18 +97,22 @@ const ListingsPage = () => {
             <PaginationItem>
               <PaginationLink
                 onClick={() => handlePageChange(listingsPage - 1)}
+                className="hover:cursor-pointer"
               >
                 {listingsPage - 1}
               </PaginationLink>
             </PaginationItem>
           )}
           <PaginationItem>
-            <PaginationLink isActive>{listingsPage}</PaginationLink>
+            <PaginationLink isActive className="hover:cursor-pointer">
+              {listingsPage}
+            </PaginationLink>
           </PaginationItem>
           {listingsPage < listingsTotalPages - 1 && (
             <PaginationItem>
               <PaginationLink
                 onClick={() => handlePageChange(listingsPage + 1)}
+                className="hover:cursor-pointer"
               >
                 {listingsPage + 1}
               </PaginationLink>
@@ -119,6 +127,7 @@ const ListingsPage = () => {
             <PaginationItem>
               <PaginationLink
                 onClick={() => handlePageChange(listingsTotalPages)}
+                className="hover:cursor-pointer"
               >
                 {listingsTotalPages}
               </PaginationLink>
@@ -132,7 +141,7 @@ const ListingsPage = () => {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-4 text-center">Listings</h1>
-      <div className="flex justify-between gap-2 items-center my-4 p-2 rounded">
+      <div className="grid grid-cols-2 md:flex justify-between gap-2 items-center my-4 p-2 rounded">
         <Select onValueChange={handleTypeChange} defaultValue="mlb_card">
           <SelectTrigger>
             <SelectValue placeholder="Select Type" />
@@ -180,17 +189,25 @@ const ListingsPage = () => {
       <div className="flex justify-center mt-4">
         <Pagination>
           <PaginationPrevious
-            onClick={() => handlePageChange(listingsPage - 1)}
-            disabled={listingsPage === 1}
+            onClick={() => {
+              if (listingsPage > 1) {
+                handlePageChange(listingsPage - 1);
+              }
+            }}
+            disabled={listingsPage < 2}
             className={
-              listingsPage === 1 || isLoading
+              listingsPage < 2 || isLoading
                 ? "hover:cursor-not-allowed"
                 : "hover:cursor-pointer"
             }
           />
           <PaginationContent>{renderPaginationItems()}</PaginationContent>
           <PaginationNext
-            onClick={() => handlePageChange(listingsPage + 1)}
+            onClick={() => {
+              if (listingsPage !== listingsTotalPages) {
+                handlePageChange(listingsPage + 1);
+              }
+            }}
             disabled={listingsPage === listingsTotalPages}
             className={
               listingsPage === listingsTotalPages || isLoading

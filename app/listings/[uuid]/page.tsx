@@ -8,7 +8,7 @@ import Image from "next/image";
 import { formatNumber } from "@/utils/formatNumber";
 import { Listing, PriceHistoryEntry } from "@/types";
 import { useParams } from "next/navigation";
-import { Line, Scatter } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -23,6 +23,7 @@ import {
 } from "chart.js";
 import "chartjs-adapter-date-fns";
 import { ArrowUpFromLineIcon, ArrowDownFromLineIcon } from "lucide-react";
+import { DataTableDemo } from "@/components/DataTable";
 
 ChartJS.register(
   CategoryScale,
@@ -94,8 +95,6 @@ const SingleListingPage = () => {
       },
     ],
   };
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore: ignoring this line
   const Commentary = (priceHistory: PriceHistoryEntry[]) => {
     if (priceHistory.length < 2) {
       return <p>Not enough data to provide commentary.</p>;
@@ -131,20 +130,22 @@ const SingleListingPage = () => {
     const minBuyPrice = Math.min(...buyPrices);
 
     return (
-      <div className="max-w-max">
-        <h3 className="text-2xl font-bold mt-4 text-center">Price History</h3>
+      <div className="w-full flex flex-col items-center justify-center">
+        <h3 className="text-2xl font-bold mt-4 text-center hidden sm:block">
+          Price History
+        </h3>
         <p className="italic text-sm text-gray-500 text-center">
           Over the Last {dayDiff} Days
         </p>
-        <div className="flex gap-2 divide-x mx-auto items-center">
-          <div className="grid gap-2 items-center max-w-max text-right">
-            <h3 className="text-xl font-bold italic">Sell</h3>
-            <ul>
-              <li className="border-b">
-                Avg: {formatNumber(averageSellPrice)}
+        <div className="grid grid-cols-2 items-center">
+          <div className="grid gap-2 items-center w-full text-center border-r-2 p-2 border-blue-500">
+            <h3 className="text-xl font-bold">Sell</h3>
+            <ul className="grid gap-2">
+              <li className="ring-1 ring-blue-200 text-xs shadow-lg rounded-full p-2 bg-slate-200 font-light text-gray-900 text-center">
+                Avg: {formatNumber(Math.trunc(averageSellPrice))}
               </li>
-              <li className="border-b">
-                DoD Change:{" "}
+              <li className="ring-1 ring-blue-200 text-xs shadow-lg rounded-full p-2 bg-slate-200 font-light text-gray-900 text-center">
+                Change:{" "}
                 {recentSellPriceChange > 0 ? (
                   <span className="text-green-500">
                     {Math.abs(recentSellPriceChange).toFixed(2)}%
@@ -155,29 +156,33 @@ const SingleListingPage = () => {
                   </span>
                 )}
               </li>
-              <li className="border-b">
-                <div className="flex justify-end gap-2">
-                  <span>Overall Trend:</span>
+              <li className="ring-1 ring-blue-200 text-xs shadow-lg rounded-full p-2 bg-slate-200 font-light text-gray-900 text-center">
+                <div className="flex items-center justify-center">
+                  <span>Trend:</span>
                   {overallSellTrend > 0 ? (
-                    <ArrowUpFromLineIcon className="text-green-500" />
+                    <ArrowUpFromLineIcon className="text-green-500 h-3" />
                   ) : (
-                    <ArrowDownFromLineIcon className="text-red-700" />
+                    <ArrowDownFromLineIcon className="text-red-700 h-3" />
                   )}
                 </div>
               </li>
-              <li className="border-b">Min: {formatNumber(minSellPrice)}</li>
-              <li className="border-b">Max: {formatNumber(maxSellPrice)}</li>
+              <li className="ring-1 ring-blue-200 text-xs shadow-lg rounded-full p-2 bg-slate-200 font-light text-gray-900 text-center">
+                Min: {formatNumber(minSellPrice)}
+              </li>
+              <li className="ring-1 ring-blue-200 text-xs shadow-lg rounded-full p-2 bg-slate-200 font-light text-gray-900 text-center">
+                Max: {formatNumber(maxSellPrice)}
+              </li>
             </ul>
           </div>
 
-          <div className="grid gap-2 max-w-max text-left">
-            <h3 className="ml-2 text-xl font-bold italic">Buy</h3>
-            <ul>
-              <li className="ml-2 border-b">
-                Avg: {formatNumber(averageBuyPrice)}
+          <div className="grid gap-2 w-full items-center text-center border-l-2 p-2 border-orange-500">
+            <h3 className="text-xl font-bold">Buy</h3>
+            <ul className="grid gap-2">
+              <li className="ring-1 ring-orange-200 text-xs shadow-lg rounded-full p-2 bg-slate-200 font-light text-gray-900 text-center">
+                Avg: {formatNumber(Math.trunc(averageBuyPrice))}
               </li>
-              <li className="ml-2 border-b">
-                DoD Change:{" "}
+              <li className="ring-1 ring-orange-200 text-xs shadow-lg rounded-full p-2 bg-slate-200 font-light text-gray-900 text-center">
+                Change:{" "}
                 {recentBuyPriceChange > 0 ? (
                   <span className="text-green-500">
                     {Math.abs(recentBuyPriceChange).toFixed(2)}%
@@ -188,21 +193,21 @@ const SingleListingPage = () => {
                   </span>
                 )}
               </li>
-              <li className="ml-2 border-b">
-                <div className="flex justify-start gap-2">
-                  <span>Overall Trend:</span>
+              <li className="ring-1 ring-orange-200 text-xs shadow-lg rounded-full p-2 bg-slate-200 font-light text-gray-900 text-center">
+                <div className="flex items-center justify-center">
+                  <span>Trend:</span>
                   {overallBuyTrend > 0 ? (
-                    <ArrowUpFromLineIcon className="text-green-500" />
+                    <ArrowUpFromLineIcon className="text-green-500 h-3" />
                   ) : (
-                    <ArrowDownFromLineIcon className="text-red-500" />
+                    <ArrowDownFromLineIcon className="text-red-500 h-3" />
                   )}
                 </div>
               </li>
-              <li className="ml-2 border-b">
-                Min Price: {formatNumber(minBuyPrice)}
+              <li className="ring-1 ring-orange-200 text-xs shadow-lg rounded-full p-2 bg-slate-200 font-light text-gray-900 text-center">
+                Min: {formatNumber(minBuyPrice)}
               </li>
-              <li className="ml-2 border-b">
-                Max Price: {formatNumber(maxBuyPrice)}
+              <li className="ring-1 ring-orange-200 text-xs shadow-lg rounded-full p-2 bg-slate-200 font-light text-gray-900 text-center">
+                Max: {formatNumber(maxBuyPrice)}
               </li>
             </ul>
           </div>
@@ -215,17 +220,6 @@ const SingleListingPage = () => {
     return <p className="text-red-500">{error}</p>;
   }
 
-  if (!listing) {
-    return <p>Loading...</p>;
-  }
-
-  const processCompletedOrdersData = () => {
-    return listing.completed_orders.map((order) => ({
-      x: new Date(order.date),
-      y: parseInt(order.price.replace(/,/g, ""), 10),
-    }));
-  };
-
   const options: ChartOptions<"line"> = {
     responsive: true,
     plugins: {
@@ -233,7 +227,7 @@ const SingleListingPage = () => {
         position: "top",
       },
       title: {
-        display: true,
+        display: false,
         text: "Price History",
       },
       tooltip: {
@@ -276,133 +270,77 @@ const SingleListingPage = () => {
     },
   };
 
-  const completedOrdersData = {
-    datasets: [
-      {
-        label: "Completed Orders",
-        data: processCompletedOrdersData(),
-        backgroundColor: "rgba(15, 27, 191, 1)",
-        borderColor: "rgba(15, 27, 191, 0.8)",
-        pointRadius: 5,
-      },
-    ],
-  };
-
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-4 text-center">
-        {listing.listing_name}
-      </h1>
-      <div className="bg-white rounded-lg shadow p-4">
-        <div className="flex gap-6 justify-between items-center">
-          <div className="flex gap-2 items-center">
+      <div className="bg-white p-4">
+        <div className="lg:flex gap-6 items-center md:justify-between">
+          <div className="flex items-center flex-col gap-2">
+            <h1 className="text-3xl justify-center font-bold  mb-4 text-center md:text-left">
+              {listing.listing_name}
+            </h1>
             <Image
               src={listing.item.baked_img}
               alt={listing.item.name}
-              width={200}
-              height={200}
-              className="rounded-lg relative"
+              width={230}
+              height={230}
+              className="rounded-lg shadow-md relative ring ring-gray-50 mb-4"
             />
           </div>
-          {Commentary(listing.price_history)}
-          <div className="text-right">
-            <h2 className="text-xl font-bold">{listing.item.name}</h2>
-            <p className="text-gray-600">{listing.item.team}</p>
-            <p className="text-gray-600">Rarity: {listing.item.rarity}</p>
-            <p className="text-gray-600">Overall: {listing.item.ovr}</p>
-            <p className="text-gray-600">
-              Series: {listing.item.series} ({listing.item.series_year})
-            </p>
-            <p className="text-gray-600">
-              Position: {listing.item.display_position}
-            </p>
-            <p className="text-gray-600 flex justify-end gap-2 items-center">
-              <span>Sell Price: </span>
-              <span>{formatNumber(listing.best_sell_price)}</span>
-              <span>
-                <Image
-                  src="/assets/images/stubs.webp"
-                  className="h-5 w-auto "
-                  alt="stubs logo"
-                  width={20}
-                  height={20}
-                />
-              </span>
-            </p>
-            <p className="text-gray-600 flex justify-end gap-2 items-center">
-              <span>Buy Price: </span>
-              <span>{formatNumber(listing.best_buy_price)}</span>
-              <span>
-                <Image
-                  src="/assets/images/stubs.webp"
-                  className="h-5 w-auto"
-                  alt="stubs logo"
-                  width={20}
-                  height={20}
-                />
-              </span>
-            </p>
+          <div className="ring ring-gray-50 shadow-md p-4 rounded-lg flex-grow gap-2 grid grid-cols-1 md:flex-row md:flex items-center justify-between">
+            <div className="md:hidden w-full h-full ring shadow-lg rounded-lg ring-blue-100 bg-blue-100 text-center">
+              Price History
+            </div>
+            {Commentary(listing.price_history)}
+
+            <div className="md:hidden text-center w-full h-full ring ring-orange-100 shadow-md rounded-lg bg-orange-100">
+              General Info
+            </div>
+            <div className="lg:text-right">
+              {/* <h2 className="text-xl font-bold">{listing.item.name}</h2> */}
+              <p className="text-gray-600">
+                {listing.item.rarity}({listing.item.ovr}){" "}
+                {listing.item.display_position} for the {listing.item.team} in
+                the {listing.item.series} Series{" "}
+              </p>
+              <p className="text-gray-600 flex lg:justify-end gap-2 items-center">
+                <span>Sell Price: </span>
+                <span>{formatNumber(listing.best_sell_price)}</span>
+                <span>
+                  <Image
+                    src="/assets/images/stubs.webp"
+                    className="h-5 w-auto "
+                    alt="stubs logo"
+                    width={20}
+                    height={20}
+                  />
+                </span>
+              </p>
+              <p className="text-gray-600 flex lg:justify-end gap-2 items-center">
+                <span>Buy Price: </span>
+                <span>{formatNumber(listing.best_buy_price)}</span>
+                <span>
+                  <Image
+                    src="/assets/images/stubs.webp"
+                    className="h-5 w-auto"
+                    alt="stubs logo"
+                    width={20}
+                    height={20}
+                  />
+                </span>
+              </p>
+            </div>
           </div>
         </div>
         {listing.price_history.length > 0 && (
-          <>
+          <div className="w-full ring ring-gray-50 mt-4 p-4 shadow-md rounded-lg">
             <Line data={priceHistoryData} options={options} />
-          </>
+          </div>
         )}
+        <h1 className="text-2xl font-bold my-4 text-center">
+          Completed Orders
+        </h1>
         {listing.completed_orders.length > 0 && (
-          <>
-            <h3 className="text-2xl font-bold mt-4">Completed Orders</h3>
-            <Scatter
-              data={completedOrdersData}
-              options={{
-                responsive: true,
-                plugins: {
-                  legend: {
-                    display: true,
-                  },
-                  tooltip: {
-                    callbacks: {
-                      label: function (context) {
-                        let label = context.dataset.label || "";
-                        if (label) {
-                          label += ": ";
-                        }
-                        if (context.parsed.y !== null) {
-                          label += new Intl.NumberFormat("en-US", {
-                            style: "currency",
-                            currency: "USD",
-                          }).format(context.parsed.y);
-                        }
-                        return label;
-                      },
-                    },
-                  },
-                },
-                scales: {
-                  x: {
-                    type: "time",
-                    time: {
-                      unit: "day",
-                      tooltipFormat: "MM/dd/yyyy HH:mm",
-                    },
-                    title: {
-                      display: true,
-                      text: "Date",
-                    },
-                  },
-                  y: {
-                    title: {
-                      display: true,
-                      text: "Price",
-                    },
-                    grid: {
-                      display: false,
-                    },
-                  },
-                },
-              }}
-            />
-          </>
+          <DataTableDemo data={listing.completed_orders} />
         )}
       </div>
     </div>
