@@ -37,7 +37,7 @@ const ListingsPage = () => {
     setOrder,
     setRarity,
   } = useStateContext();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading] = useState(false);
 
   const handleTypeChange = (value: string) => {
     setListingType(value);
