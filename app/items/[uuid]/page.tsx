@@ -38,7 +38,7 @@ const ItemDetailPage = () => {
 
   useEffect(() => {
     void fetchItem();
-  });
+  }, []);
 
   if (isLoading) {
     return (

@@ -24,6 +24,8 @@ import {
 import "chartjs-adapter-date-fns";
 import { ArrowUpFromLineIcon, ArrowDownFromLineIcon } from "lucide-react";
 import { DataTableDemo } from "@/components/DataTable";
+import { cx } from "class-variance-authority";
+import { cleanString } from "@/utils/cleanString";
 
 ChartJS.register(
   CategoryScale,
@@ -131,7 +133,7 @@ const SingleListingPage = () => {
 
     return (
       <div className="w-full flex flex-col items-center justify-center">
-        <h3 className="text-2xl font-bold mt-4 text-center hidden sm:block">
+        <h3 className="text-2xl font-bold mt-4 text-center hidden md:block">
           Price History
         </h3>
         <p className="italic text-sm text-gray-500 text-center">
@@ -270,12 +272,24 @@ const SingleListingPage = () => {
     },
   };
 
+  const primaryBackgroundColor = `bg-${listing.item.team
+    .toLowerCase()
+    .replace(/\s/g, "")}-primary`;
+  const primaryTextColor = `bg-${listing.item.team
+    .toLowerCase()
+    .replace(/\s/g, "")}-primary`;
+  const secondaryBackgroundColor = `bg-${listing.item.team
+    .toLowerCase()
+    .replace(/\s/g, "")}-secondary`;
+  const secondaryTextColor = `bg-${listing.item.team
+    .toLowerCase()
+    .replace(/\s/g, "")}-secondary`;
   return (
     <div className="container mx-auto p-4">
       <div className="bg-white p-4">
-        <div className="lg:flex gap-6 items-center md:justify-between">
-          <div className="flex items-center flex-col gap-2">
-            <h1 className="text-3xl justify-center font-bold  mb-4 text-center md:text-left">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+          <div className="rounded-lg flex items-center flex-col shadow-lg ring ring-gray-50">
+            <h1 className="py-2 rounded-t-lg flex w-full text-3xl content-center justify-center font-bold text-center md:text-left">
               {listing.listing_name}
             </h1>
             <Image
@@ -283,7 +297,7 @@ const SingleListingPage = () => {
               alt={listing.item.name}
               width={230}
               height={230}
-              className="rounded-lg shadow-md relative ring ring-gray-50 mb-4"
+              className="rounded-b-lg relative"
             />
           </div>
           <div className="ring ring-gray-50 shadow-md p-4 rounded-lg flex-grow gap-2 grid grid-cols-1 md:flex-row md:flex items-center justify-between">
@@ -291,20 +305,77 @@ const SingleListingPage = () => {
               Price History
             </div>
             {Commentary(listing.price_history)}
-
             <div className="md:hidden text-center w-full h-full ring ring-orange-100 shadow-md rounded-lg bg-orange-100">
               General Info
             </div>
-            <div className="lg:text-right">
-              {/* <h2 className="text-xl font-bold">{listing.item.name}</h2> */}
-              <p className="text-gray-600">
-                {listing.item.rarity}({listing.item.ovr}){" "}
-                {listing.item.display_position} for the {listing.item.team} in
-                the {listing.item.series} Series{" "}
-              </p>
-              <p className="text-gray-600 flex lg:justify-end gap-2 items-center">
-                <span>Sell Price: </span>
-                <span>{formatNumber(listing.best_sell_price)}</span>
+            <div className="min-w-max grid gap-2">
+              <h2 className="hidden md:block text-xl font-bold">
+                General Info
+              </h2>
+              <div className="text-gray-600 grid gap-2">
+                <Image
+                  src={`/assets/images/${listing.item.team
+                    .toLowerCase()
+                    .replace(/\s/g, "")}.png`}
+                  className={cx(
+                    "flex font-bold gap-2 shadow-md text-sm items-center rounded-full mx-auto p-1 ring",
+                    listing &&
+                      listing.item &&
+                      listing.item.team &&
+                      `bg-${listing.item.team
+                        .toLowerCase()
+                        .replace(/\s/g, "")}-secondary text-${listing.item.team
+                        .toLowerCase()
+                        .replace(/\s/g, "")}-primary ring-${listing.item.team
+                        .toLowerCase()
+                        .replace(/\s/g, "")}-primary`
+                  )}
+                  width={50}
+                  height={50}
+                  alt={`${cleanString(listing.item.team.toLowerCase())}`}
+                />
+                <span
+                  className={cx(
+                    "text-xs p-2 rounded-full shadow text-center",
+                    listing &&
+                      listing.item.rarity &&
+                      `bg-${listing.item.rarity.toLowerCase()}`
+                  )}
+                >
+                  {listing.item.rarity} | {listing.item.ovr} |{" "}
+                  {listing.item.display_position}{" "}
+                </span>
+
+                <span
+                  className={cx(
+                    "flex font-bold p-2 gap-2 shadow-md text-xs items-center rounded-full justify-center",
+                    listing &&
+                      listing.item &&
+                      listing.item.team &&
+                      `bg-${listing.item.team
+                        .toLowerCase()
+                        .replace(/\s/g, "")}-secondary text-${listing.item.team
+                        .toLowerCase()
+                        .replace(/\s/g, "")}-primary`
+                  )}
+                >
+                  {listing.item.series} Series
+                </span>
+              </div>
+              <div
+                className={cx(
+                  "flex font-bold p-2 gap-2 shadow-md text-xs items-center rounded-full justify-center",
+                  listing &&
+                    listing.item &&
+                    listing.item.team &&
+                    `bg-${listing.item.team
+                      .toLowerCase()
+                      .replace(/\s/g, "")}-secondary text-${listing.item.team
+                      .toLowerCase()
+                      .replace(/\s/g, "")}-primary`
+                )}
+              >
+                <span>Sell: {formatNumber(listing.best_sell_price)}</span>
                 <span>
                   <Image
                     src="/assets/images/stubs.webp"
@@ -314,10 +385,21 @@ const SingleListingPage = () => {
                     height={20}
                   />
                 </span>
-              </p>
-              <p className="text-gray-600 flex lg:justify-end gap-2 items-center">
-                <span>Buy Price: </span>
-                <span>{formatNumber(listing.best_buy_price)}</span>
+              </div>
+              <div
+                className={cx(
+                  "flex font-bold p-2 gap-2 shadow-md text-xs items-center rounded-full justify-center",
+                  listing &&
+                    listing.item &&
+                    listing.item.team &&
+                    `bg-${listing.item.team
+                      .toLowerCase()
+                      .replace(/\s/g, "")}-secondary text-${listing.item.team
+                      .toLowerCase()
+                      .replace(/\s/g, "")}-primary`
+                )}
+              >
+                <span>Buy: {formatNumber(listing.best_buy_price)}</span>
                 <span>
                   <Image
                     src="/assets/images/stubs.webp"
@@ -327,10 +409,11 @@ const SingleListingPage = () => {
                     height={20}
                   />
                 </span>
-              </p>
+              </div>
             </div>
           </div>
         </div>
+
         {listing.price_history.length > 0 && (
           <div className="w-full ring ring-gray-50 mt-4 p-4 shadow-md rounded-lg">
             <Line data={priceHistoryData} options={options} />
